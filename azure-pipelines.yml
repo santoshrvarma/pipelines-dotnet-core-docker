@@ -8,25 +8,17 @@ trigger:
 resources:
 - repo: self
 
-variables:
-  tag: '$(Build.BuildId)'
-
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:  
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '**/Dockerfile'
-        tags: |
-          $(tag)
-          
 pool:
   vmImage: 'ubuntu-16.04' # other options: 'macOS-10.13', 'vs2017-win2016'          
+
+variables:
+  dockerId: my-docker-id  # Replace with your Docker ID for Docker Hub or the admin user name for the Azure Container Registry
+  imageName: my-image-name  # Replace with the name of the image you want to publish
+
+steps:
+- script: |
+    docker build -t $(dockerId).azurecr.io/$(imageName) .
+    docker login -u $(dockerId) -p $(pswd) $(dockerId).azurecr.io
+    docker push $(dockerId).azurecr.io/$(imageName)
+  env:
+    pswd: $(dockerPassword)        # Define dockerPassword in the Variables tab of this pipeline in Pipelines page of web interface
