@@ -12,7 +12,7 @@ pool:
   vmImage: 'ubuntu-16.04' # other options: 'macOS-10.13', 'vs2017-win2016'          
 
 variables:
-  dockerId: santfunction001  # Replace with your Docker ID for Docker Hub or the admin user name for the Azure Container Registry
+  dockerId: santoshrvarma  # Replace with your Docker ID for Docker Hub or the admin user name for the Azure Container Registry
   imageName: mcr.microsoft.com/azure-functions/python  # Replace with the name of the image you want to publish
 
 steps:
